@@ -40,8 +40,9 @@ This does the following for you:
 
 1. Resolves `$NVM_DIR` (or defaults to `~/.nvm`).
 2. Sources `nvm.sh`.
-3. Runs `nvm use 20` (prompting to install if the version is missing).
-4. Executes `npx -y chrome-devtools-mcp@latest` inside that runtime.
+3. Delegates to `nvm exec 20 npx -y chrome-devtools-mcp@latest`, so nvm handles the runtime switch and process execution.
+
+- Everything ultimately goes through `nvm exec`, so you get the same behavior as running `nvm exec <version> <command>` manually, only without the boilerplate of sourcing nvm first.
 
 ### Install globally (recommended for MCP)
 

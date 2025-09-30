@@ -43,8 +43,7 @@ function buildShellSnippet({ nvmDir, silent }) {
     '  exit 1',
     'fi',
     '. "$NVM_DIR/nvm.sh"',
-    `nvm use "$NVM_EXEC_VERSION"${silent ? ' >/dev/null' : ''}`,
-    'exec "$@"',
+    `${silent ? 'nvm exec --silent' : 'nvm exec'} "$NVM_EXEC_VERSION" "$@"`,
   ];
   return lines.join('\n');
 }

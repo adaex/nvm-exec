@@ -38,8 +38,7 @@ npx nvm-exec@latest 20 npx -y chrome-devtools-mcp@latest
 
 1. 读取 `$NVM_DIR`（或默认的 `~/.nvm`）；
 2. 加载 `nvm.sh`；
-3. 切换到 Node 20（不存在时会按照 nvm 的行为提示安装）；
-4. 在该版本下执行 `npx -y chrome-devtools-mcp@latest`。
+3. 调用 `nvm exec 20 npx -y chrome-devtools-mcp@latest`，交由 nvm 完成版本切换和命令执行。
 
 ### 安装为全局命令（推荐用于 MCP）
 
@@ -127,6 +126,7 @@ NVM_DIR=/Users/you/.nvm
 ## 版本别名 & 自定义快捷方式
 
 - 任何以 `-<版本>` 结尾的可执行名（如 `nvm-npx-20`、`nvm-exec-18.19.0`）都会自动解析 `<版本>` 部分，省去再次填写。
+- CLI 最终都会走 `nvm exec`，本质上等价于手动运行 `nvm exec <版本> <命令>`，只是自动帮你加载了 nvm 环境。
 - 在 `zsh` / `bash` 中你可以创建别名，例如：
 
   ```bash

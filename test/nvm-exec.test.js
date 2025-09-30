@@ -30,7 +30,7 @@ test('runWithNvm dry-run reports script and command details', () => {
 
   const formatted = formatDryRunResult(result);
   assert.ok(formatted.includes("/bin/zsh -c <<'SH'"));
-  assert.ok(formatted.includes('nvm use "$NVM_EXEC_VERSION"'));
+  assert.ok(formatted.includes('nvm exec "$NVM_EXEC_VERSION"'));
 });
 
 test('buildParser respects default command for nvm-npx', () => {
