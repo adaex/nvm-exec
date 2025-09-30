@@ -19,23 +19,21 @@ That command is long, repetitive, and hard to share across machines. `nvm-exec` 
 
 ## Binaries and aliases
 
-The package is published as **`nvm-exec`**, highlighting its job: execute anything inside an nvm-managed runtime. Several convenient aliases are included out of the box:
+The package is published as **`nvm-exec`**, highlighting its job: execute anything inside an nvm-managed runtime. Two executables are included out of the box:
 
-| Executable  | Default command | Best for                                                      |
-| ----------- | --------------- | ------------------------------------------------------------- |
-| `nvm-exec`  | _none_          | Generic runner; you must provide the command explicitly       |
-| `node-exec` | _none_          | Same as `nvm-exec`, with a slightly more “Node-oriented” name |
-| `nvm-npx`   | `npx`           | One-liner for running `npx` under a specific Node version     |
-| `npx-nvm`   | `npx`           | Mirrored name that is easy to remember                        |
+| Executable | Default command | Best for                                                  |
+| ---------- | --------------- | --------------------------------------------------------- |
+| `nvm-exec` | _none_          | Generic runner; you must provide the command explicitly   |
+| `nvm-npx`  | `npx`           | One-liner for running `npx` under a specific Node version |
 
 If you create your own symlink or alias such as `nvm-npx-20`, the trailing `-20` is automatically interpreted as the version, so no extra flag is required.
 
 ## Quick start
 
-### Fire and forget with `npx` (recommended)
+### Run once with `npx`
 
 ```bash
-npx nvm-npx@latest 20 -y chrome-devtools-mcp@latest
+npx nvm-exec@latest 20 npx -y chrome-devtools-mcp@latest
 ```
 
 This does the following for you:
@@ -45,7 +43,7 @@ This does the following for you:
 3. Runs `nvm use 20` (prompting to install if the version is missing).
 4. Executes `npx -y chrome-devtools-mcp@latest` inside that runtime.
 
-### Install globally
+### Install globally (recommended for MCP)
 
 ```bash
 npm install -g nvm-exec
@@ -61,14 +59,14 @@ nvm-exec 20 node app.js
 {
   "mcpServers": {
     "chrome-devtools": {
-      "command": "npx",
-      "args": ["nvm-npx@latest", "20", "-y", "chrome-devtools-mcp@latest"]
+      "command": "nvm-npx",
+      "args": ["22", "-y", "chrome-devtools-mcp@latest"]
     }
   }
 }
 ```
 
-Compared with the official snippet you only add two intuitive arguments: the desired Node version (`20`) and the package you intend to run.
+Install `nvm-exec` globally (or otherwise expose `nvm-npx` on the PATH) so this command is available to MCP.
 
 ## Command reference
 
@@ -130,12 +128,12 @@ NVM_DIR=/Users/you/.nvm
 
 ## Version aliases & shortcuts
 
-- Any executable whose name ends with `-<version>` (for example `nvm-npx-20` or `node-exec-18.19.0`) automatically treats that suffix as the target version.
+- Any executable whose name ends with `-<version>` (for example `nvm-npx-20` or `nvm-exec-18.19.0`) automatically treats that suffix as the target version.
 - Feel free to add shell aliases:
 
   ```bash
-  alias npx20='npx nvm-npx@latest 20'
-  alias node18='npx nvm-exec@latest 18 node'
+  alias npx20='nvm-npx 20'
+  alias node18='nvm-exec 18 node'
   ```
 
   Then `npx20 -y some-cli` becomes a single command away.
@@ -158,7 +156,7 @@ Check the following:
 
 ### Why not call the package `nvm-npx`?
 
-`nvm-exec` reflects a broader goal: run _any_ command inside an nvm-managed Node runtime, including `npx`, `npm`, `node`, `tsx`, or custom binaries. The familiar names `nvm-npx` and `npx-nvm` remain as first-class executables so you can still type the commands that feel most natural.
+`nvm-exec` reflects a broader goal: run _any_ command inside an nvm-managed Node runtime, including `npx`, `npm`, `node`, `tsx`, or custom binaries. The companion executable `nvm-npx` stays focused on the most common `npx` workflow.
 
 ## License
 

@@ -4,9 +4,7 @@
   "description": "Run commands through nvm-managed Node versions with zero shell boilerplate.",
   "bin": {
     "nvm-exec": "./bin/nvm-exec.js",
-    "node-exec": "./bin/nvm-exec.js",
-    "nvm-npx": "./bin/nvm-npx.js",
-    "npx-nvm": "./bin/nvm-npx.js"
+    "nvm-npx": "./bin/nvm-npx.js"
   },
   "files": [
     "bin",

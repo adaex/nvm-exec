@@ -17,23 +17,21 @@
 
 ## 命名与入口
 
-我们把包命名为 **`nvm-exec`**，突出它的职责：在 nvm 环境中执行任意命令。它同时导出了几个常用的别名，方便直接使用：
+我们把包命名为 **`nvm-exec`**，突出它的职责：在 nvm 环境中执行任意命令。它同时导出了两个常用的可执行文件，开箱即用：
 
-| 可执行文件  | 默认命令 | 适用场景                                          |
-| ----------- | -------- | ------------------------------------------------- |
-| `nvm-exec`  | 无       | 通用执行器，需要显式指定要运行的命令              |
-| `node-exec` | 无       | `nvm-exec` 的同义词，更贴近“运行 Node 命令”的语义 |
-| `nvm-npx`   | `npx`    | 最常用：在指定 Node 版本下运行 `npx`              |
-| `npx-nvm`   | `npx`    | 便于记忆的互换写法                                |
+| 可执行文件 | 默认命令 | 适用场景                               |
+| ---------- | -------- | -------------------------------------- |
+| `nvm-exec` | 无       | 通用执行器，需要显式指定要运行的命令   |
+| `nvm-npx`  | `npx`    | 在指定 Node 版本下以一行命令运行 `npx` |
 
 此外，如果你愿意创建符号链接或别名，例如 `nvm-npx-20`，程序也能自动识别 `-20` 作为版本号，无需额外传参。
 
 ## 快速开始
 
-### 直接用 npx 运行（推荐）
+### 临时使用（通过 npx）
 
 ```bash
-npx nvm-npx@latest 20 -y chrome-devtools-mcp@latest
+npx nvm-exec@latest 20 npx -y chrome-devtools-mcp@latest
 ```
 
 这会自动：
@@ -43,7 +41,7 @@ npx nvm-npx@latest 20 -y chrome-devtools-mcp@latest
 3. 切换到 Node 20（不存在时会按照 nvm 的行为提示安装）；
 4. 在该版本下执行 `npx -y chrome-devtools-mcp@latest`。
 
-### 安装为全局命令
+### 安装为全局命令（推荐用于 MCP）
 
 ```bash
 npm install -g nvm-exec
@@ -59,14 +57,14 @@ nvm-exec 20 node app.js
 {
   "mcpServers": {
     "chrome-devtools": {
-      "command": "npx",
-      "args": ["nvm-npx@latest", "20", "-y", "chrome-devtools-mcp@latest"]
+      "command": "nvm-npx",
+      "args": ["22", "-y", "chrome-devtools-mcp@latest"]
     }
   }
 }
 ```
 
-比官方示例仅多了两个直观的参数：`20` 和要执行的包。
+请先全局安装 `nvm-exec`（或以其他方式确保 `nvm-npx` 在 PATH 中），让 MCP 可以找到这个命令。
 
 ## 通用命令格式
 
@@ -128,12 +126,12 @@ NVM_DIR=/Users/you/.nvm
 
 ## 版本别名 & 自定义快捷方式
 
-- 任何以 `-<版本>` 结尾的可执行名（如 `nvm-npx-20`、`node-exec-18.19.0`）都会自动解析 `<版本>` 部分，省去再次填写。
+- 任何以 `-<版本>` 结尾的可执行名（如 `nvm-npx-20`、`nvm-exec-18.19.0`）都会自动解析 `<版本>` 部分，省去再次填写。
 - 在 `zsh` / `bash` 中你可以创建别名，例如：
 
   ```bash
-  alias npx20='npx nvm-npx@latest 20'
-  alias node18='npx nvm-exec@latest 18 node'
+  alias npx20='nvm-npx 20'
+  alias node18='nvm-exec 18 node'
   ```
 
   之后运行 `npx20 -y some-cli` 即可。
@@ -156,7 +154,7 @@ nvm-exec: nvm.sh not found at /Users/you/.nvm/nvm.sh
 
 ### 为什么不是叫 nvm-npx？
 
-我们选择 `nvm-exec` 作为包名，是因为它不仅能跑 `npx`，还可以在 nvm 环境中执行任何命令，甚至是 `npm`、`node`、`tsx` 或自定义脚本。与此同时，常用的 `nvm-npx`、`npx-nvm` 都作为可执行入口保留了下来，让你在 MCP 等场景中仍旧可以以最自然的名字调用。
+我们选择 `nvm-exec` 作为包名，是因为它不仅能跑 `npx`，还可以在 nvm 环境中执行任何命令，甚至是 `npm`、`node`、`tsx` 或自定义脚本。配套的 `nvm-npx` 则聚焦在最常见的 `npx` 工作流上。
 
 ## 许可证
 
