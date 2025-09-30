@@ -1,10 +1,9 @@
 {
   "name": "nvm-exec",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Run commands through nvm-managed Node versions with zero shell boilerplate.",
   "bin": {
-    "nvm-exec": "./bin/nvm-exec.js",
-    "nvm-npx": "./bin/nvm-npx.js"
+    "nvm-exec": "./bin/nvm-exec.js"
   },
   "files": [
     "bin",
